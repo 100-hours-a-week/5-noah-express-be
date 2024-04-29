@@ -57,30 +57,4 @@ const deletePost = (request, response, next) => {
     }
 };
 
-// TODO commentController 분리
-const createComment = (request, response, next) => {
-    const postId = request.params.postId;
-    const {content} = request.body;
-
-    try {
-        postService.createComment(postId, content);
-
-        response.sendStatus(200);
-    } catch (error) {
-        next(error);
-    }
-};
-
-const deleteComment = (request, response, next) => {
-    const id = request.body.id;
-
-    try {
-        postService.deleteComment(id);
-
-        response.sendStatus(200);
-    } catch (error) {
-        next(error);
-    }
-};
-
-module.exports = {searchAllPost, searchPost, createPost, editPost, deletePost, createComment, deleteComment};
+module.exports = {searchAllPost, searchPost, createPost, editPost, deletePost};

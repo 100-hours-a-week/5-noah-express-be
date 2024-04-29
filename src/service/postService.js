@@ -3,7 +3,6 @@
 const postRepository = require('../repository/postRepository');
 const commentRepository = require('../repository/commentRepository');
 
-// TODO DTO 구성 필요
 const searchAllPost = () => {
     const foundPosts = postRepository.findAllPost();
 
@@ -26,7 +25,6 @@ const searchAllPost = () => {
     return postsDto;
 };
 
-// TODO DTO 구성 필요
 const searchPost = (id) => {
     id = parseInt(id);
 
@@ -72,13 +70,4 @@ const deletePost = (id) => {
     postRepository.deletePostById(parseInt(id));
 };
 
-// TODO post, comment 분리
-const createComment = (postId, content) => {
-    commentRepository.saveComment(0, parseInt(postId), content);
-};
-
-const deleteComment = (id) => {
-    commentRepository.deleteCommentById(parseInt(id));
-};
-
-module.exports = {searchAllPost, searchPost, createPost, editPost, deletePost, createComment, deleteComment};
+module.exports = {searchAllPost, searchPost, createPost, editPost, deletePost};

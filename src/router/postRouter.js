@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer');
 
 const postController = require('../controller/postController');
+const commentRouter = require('./commentRouter');
 
 const filename = (request, file, callback) => {
     callback(null, file.originalname);
@@ -23,10 +24,6 @@ router.patch('/:id', upload.single('image'), postController.editPost);
 
 router.delete('/:id', postController.deletePost);
 
-// TODO comment router 분리
-router.post('/:postId/comments', postController.createComment);
-
-// TODO postId 필요 없음
-router.delete('/:postId/comments', postController.deleteComment);
+router.use('/:postId/comments', commentRouter);
 
 module.exports = router;

@@ -1,5 +1,3 @@
-// TODO postRepository와 json 겹침, 분리
-
 require('dotenv').config();
 const fs = require('fs');
 
