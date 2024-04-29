@@ -46,7 +46,7 @@ const saveImageAndGetImageUrl = (image) => {
 
 const deleteImage = (imageUrl) => {
     if (imageUrl) {
-        fs.unlinkSync(imageUrl);
+        fs.unlinkSync(`public/${imageUrl}`);
     }
 };
 

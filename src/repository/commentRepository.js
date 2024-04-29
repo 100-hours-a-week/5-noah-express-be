@@ -41,6 +41,18 @@ const getDate = () => {
     return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 };
 
+const findCommentCountByPostId = (postId) => {
+    let count = 0;
+
+    parseJson().comments.forEach(comment => {
+        if (comment.postId === postId) {
+            count++;
+        }
+    });
+
+    return count;
+};
+
 const findAllCommentByPostId = (postId) => {
     return parseJson().comments.filter(comment => comment.postId === postId);
 };
@@ -83,4 +95,4 @@ const deleteCommentById = (id) => {
     saveJson(json);
 };
 
-module.exports = {findAllCommentByPostId, saveComment, updateCommentById, deleteCommentById};
+module.exports = {findCommentCountByPostId, findAllCommentByPostId, saveComment, updateCommentById, deleteCommentById};
