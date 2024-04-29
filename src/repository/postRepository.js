@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const {v4: uuidv4} = require('uuid');
 
-const PostNotFoundError = require('../error/PostNotFound');
+const PostNotFoundError = require('../error/PostNotFoundError');
 
 const saveJson = (json) => {
     fs.writeFileSync(`${process.env.JSON_PATH}/${process.env.POST_JSON_NAME}`, JSON.stringify(json, null, 2));
