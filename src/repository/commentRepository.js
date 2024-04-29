@@ -84,13 +84,13 @@ const updateCommentById = (id, content) => {
 const deleteCommentById = (id) => {
     const json = parseJson();
 
-    const foundComment = json.comments.find(comment => comment.id === id);
+    const foundCommentIndex = json.comments.findIndex(comment => comment.id === id);
 
-    if (!foundComment) {
+    if (foundCommentIndex === -1) {
         throw new CommentNotFoundError();
     }
 
-    json.comments.splice(foundComment.id, 1);
+    json.comments.splice(foundCommentIndex, 1);
 
     saveJson(json);
 };
