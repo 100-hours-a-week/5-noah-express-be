@@ -17,9 +17,9 @@ router.get('/', postController.searchAllPost);
 
 router.get('/:id', postController.searchPost);
 
-router.post('/', upload.single('post-image'), postController.createPost);
+router.post('/', upload.single('image'), postController.createPost);
 
-router.patch('/:id', upload.single('post-image'), postController.editPost);
+router.patch('/:id', upload.single('image'), postController.editPost);
 
 router.delete('/:id', postController.deletePost);
 
