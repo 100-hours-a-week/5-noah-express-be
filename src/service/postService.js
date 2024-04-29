@@ -51,6 +51,7 @@ const searchPost = (id) => {
             'name': 'noah', 'imageUrl': 'user-images/noah.png',
         },
         'createdDate': foundPost.createdDate,
+        'imageUrl': foundPost.imageUrl,
         'title': foundPost.title,
         'content': foundPost.content,
         'views': foundPost.views,
