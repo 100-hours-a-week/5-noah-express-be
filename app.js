@@ -4,6 +4,8 @@ const express = require('express');
 const logger = require('morgan');
 const path = require('path');
 
+const postRouter = require('./src/router/postRouter');
+
 const app = express();
 
 app.use(logger('dev'));
@@ -15,8 +17,6 @@ app.use(express.json());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (request, response) => {
-    response.sendStatus(200);
-});
+app.use('/api/posts', postRouter);
 
 app.listen(process.env.SERVER_PORT);

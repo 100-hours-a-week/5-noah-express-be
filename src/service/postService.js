@@ -27,11 +27,11 @@ const searchAllPost = () => {
 };
 
 // TODO DTO 구성 필요
-const searchPost = (postId) => {
-    postId = parseInt(postId);
+const searchPost = (id) => {
+    id = parseInt(id);
 
-    const foundPost = postRepository.findPostById(postId);
-    const foundComments = commentRepository.findAllCommentByPostId(postId);
+    const foundPost = postRepository.findPostById(id);
+    const foundComments = commentRepository.findAllCommentByPostId(id);
 
     let count = 0;
     const commentsDto = [];
