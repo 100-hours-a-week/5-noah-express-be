@@ -116,15 +116,15 @@ const updatePostById = (id, image, title, content) => {
 const deletePostById = (id) => {
     const json = parseJson();
 
-    const foundPost = json.posts.find(post => post.id === id);
+    const foundPostIndex = json.posts.findIndex(post => post.id === id);
 
-    if (!foundPost) {
+    if (foundPostIndex === -1) {
         throw new PostNotFoundError();
     }
 
-    deleteImage(foundPost.imageUrl);
+    deleteImage(json.posts[foundPostIndex].imageUrl);
 
-    json.posts.splice(foundPost.id, 1);
+    json.posts.splice(foundPostIndex, 1);
 
     saveJson(json);
 };
