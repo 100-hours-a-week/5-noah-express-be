@@ -23,4 +23,10 @@ router.patch('/:id', upload.single('post-image'), postController.editPost);
 
 router.delete('/:id', postController.deletePost);
 
+// TODO comment router 분리
+router.post('/:postId/comments', postController.createComment);
+
+// TODO postId 필요 없음
+router.delete('/:postId/comments', postController.deleteComment);
+
 module.exports = router;

@@ -72,4 +72,13 @@ const deletePost = (id) => {
     postRepository.deletePostById(parseInt(id));
 };
 
-module.exports = {searchAllPost, searchPost, createPost, editPost, deletePost};
+// TODO post, comment 분리
+const createComment = (postId, content) => {
+    commentRepository.saveComment(0, parseInt(postId), content);
+};
+
+const deleteComment = (id) => {
+    commentRepository.deleteCommentById(parseInt(id));
+};
+
+module.exports = {searchAllPost, searchPost, createPost, editPost, deletePost, createComment, deleteComment};
