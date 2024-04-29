@@ -67,11 +67,17 @@ const findAllPost = () => {
 };
 
 const findPostById = (id) => {
-    const foundPost = parseJson().posts.find(post => post.id === id);
+    const json = parseJson();
+
+    const foundPost = json.posts.find(post => post.id === id);
 
     if (!foundPost) {
         throw new PostNotFoundError();
     }
+
+    foundPost.views++;
+
+    saveJson(json);
 
     return foundPost;
 };
