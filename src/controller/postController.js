@@ -19,11 +19,12 @@ const searchPost = (request, response, next) => {
 };
 
 const createPost = (request, response, next) => {
+    const userId = request.session.userId;
     const image = request.file;
     const {title, content} = request.body;
 
     try {
-        postService.createPost(image, title, content);
+        postService.createPost(userId, image, title, content);
 
         response.sendStatus(200);
     } catch (error) {
@@ -32,12 +33,13 @@ const createPost = (request, response, next) => {
 };
 
 const editPost = (request, response, next) => {
+    const userId = request.session.userId;
     const id = request.params.id;
     const image = request.file;
     const {title, content} = request.body;
 
     try {
-        postService.editPost(id, image, title, content);
+        postService.editPost(userId, id, image, title, content);
 
         response.sendStatus(200);
     } catch (error) {
@@ -46,10 +48,11 @@ const editPost = (request, response, next) => {
 };
 
 const deletePost = (request, response, next) => {
+    const userId = request.session.userId;
     const id = request.params.id;
 
     try {
-        postService.deletePost(id);
+        postService.deletePost(userId, id);
 
         response.sendStatus(200);
     } catch (error) {

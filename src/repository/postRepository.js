@@ -4,6 +4,7 @@ const path = require('path');
 const {v4: uuidv4} = require('uuid');
 
 const PostNotFoundError = require('../error/PostNotFoundError');
+const ForbiddenModificationError = require('../error/ForbiddenModificationError');
 
 const saveJson = (json) => {
     fs.writeFileSync(`${process.env.JSON_PATH}/${process.env.POST_JSON_NAME}`, JSON.stringify(json, null, 2));
@@ -101,13 +102,17 @@ const savePost = (userId, image, title, content) => {
     saveJson(json);
 };
 
-const updatePostById = (id, image, title, content) => {
+const updatePostById = (userId, id, image, title, content) => {
     const json = parseJson();
 
     const foundPost = json.posts.find(post => post.id === id);
 
     if (!foundPost) {
         throw new PostNotFoundError();
+    }
+
+    if (foundPost.userId !== userId) {
+        throw new ForbiddenModificationError();
     }
 
     deleteImage(foundPost.imageUrl);
@@ -119,13 +124,17 @@ const updatePostById = (id, image, title, content) => {
     saveJson(json);
 };
 
-const deletePostById = (id) => {
+const deletePostById = (userId, id) => {
     const json = parseJson();
 
     const foundPostIndex = json.posts.findIndex(post => post.id === id);
 
     if (foundPostIndex === -1) {
         throw new PostNotFoundError();
+    }
+
+    if (json.posts[foundPostIndex].userId !== userId) {
+        throw new ForbiddenModificationError();
     }
 
     deleteImage(json.posts[foundPostIndex].imageUrl);

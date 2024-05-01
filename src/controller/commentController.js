@@ -1,11 +1,12 @@
 const commentService = require('../service/commentService');
 
 const createComment = (request, response, next) => {
+    const userId = request.session.userId;
     const postId = request.params.postId;
     const {content} = request.body;
 
     try {
-        commentService.createComment(postId, content);
+        commentService.createComment(userId, postId, content);
 
         response.sendStatus(200);
     } catch (error) {
@@ -14,10 +15,11 @@ const createComment = (request, response, next) => {
 };
 
 const deleteComment = (request, response, next) => {
+    const userId = request.session.userId;
     const id = request.body.id;
 
     try {
-        commentService.deleteComment(id);
+        commentService.deleteComment(userId, id);
 
         response.sendStatus(200);
     } catch (error) {

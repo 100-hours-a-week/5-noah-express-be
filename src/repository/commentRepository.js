@@ -2,6 +2,7 @@ require('dotenv').config();
 const fs = require('fs');
 
 const CommentNotFoundError = require('../error/CommentNotFoundError');
+const ForbiddenModificationError = require('../error/ForbiddenModificationError');
 
 const saveJson = (json) => {
     fs.writeFileSync(`${process.env.JSON_PATH}/${process.env.COMMENT_JSON_NAME}`, JSON.stringify(json, null, 2));
@@ -79,13 +80,17 @@ const updateCommentById = (id, content) => {
     saveJson(json);
 };
 
-const deleteCommentById = (id) => {
+const deleteCommentById = (userId, id) => {
     const json = parseJson();
 
     const foundCommentIndex = json.comments.findIndex(comment => comment.id === id);
 
     if (foundCommentIndex === -1) {
         throw new CommentNotFoundError();
+    }
+
+    if (json.comments[foundCommentIndex].userId !== userId) {
+        throw new ForbiddenModificationError();
     }
 
     json.comments.splice(foundCommentIndex, 1);
