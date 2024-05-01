@@ -1,6 +1,8 @@
 const express = require('express');
 const multer = require('multer');
 
+const validateUser = require('./validate/validateUser');
+
 const postController = require('../controller/postController');
 const commentRouter = require('./commentRouter');
 
@@ -18,11 +20,11 @@ router.get('/', postController.searchAllPost);
 
 router.get('/:id', postController.searchPost);
 
-router.post('/', upload.single('image'), postController.createPost);
+router.post('/', validateUser, upload.single('image'), postController.createPost);
 
-router.patch('/:id', upload.single('image'), postController.editPost);
+router.patch('/:id', validateUser, upload.single('image'), postController.editPost);
 
-router.delete('/:id', postController.deletePost);
+router.delete('/:id', validateUser, postController.deletePost);
 
 router.use('/:postId/comments', commentRouter);
 
