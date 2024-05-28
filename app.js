@@ -6,6 +6,7 @@ const logger = require('morgan');
 const path = require('path');
 const session = require('express-session');
 
+const checkAuthRouter = require('./src/router/checkAuthRouter');
 const signInRouter = require('./src/router/signInRouter');
 const signUpRouter = require('./src/router/signUpRouter');
 const signOutRouter = require('./src/router/signOutRouter');
@@ -23,13 +24,19 @@ app.use(express.json());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(cors({origin: 'http://localhost:3000', credentials: true}));
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+}));
 
 app.use(session({
-    secret: process.env.SERVER_SESSION_KEY, resave: false, // 변경되지 않은 세션도 저장할지 여부
+    secret: process.env.SERVER_SESSION_KEY,
+    resave: false, // 변경되지 않은 세션도 저장할지 여부
     saveUninitialized: true, // 초기화되지 않은 세션도 저장할지 여부
 }));
 
+// Q: /api/check-auth은 옳은 또는 일반적인 URL인가?
+app.use('/api/check-auth', checkAuthRouter);
 app.use('/api/sign-in', signInRouter);
 app.use('/api/sign-up', signUpRouter);
 app.use('/api/sign-out', signOutRouter);

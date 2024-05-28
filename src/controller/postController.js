@@ -21,7 +21,10 @@ const searchPost = (request, response, next) => {
 const createPost = (request, response, next) => {
     const userId = request.session.userId;
     const image = request.file;
-    const {title, content} = request.body;
+    const {
+        title,
+        content,
+    } = request.body;
 
     try {
         postService.createPost(userId, image, title, content);
@@ -36,7 +39,10 @@ const editPost = (request, response, next) => {
     const userId = request.session.userId;
     const id = request.params.id;
     const image = request.file;
-    const {title, content} = request.body;
+    const {
+        title,
+        content,
+    } = request.body;
 
     try {
         postService.editPost(userId, id, image, title, content);
@@ -60,4 +66,10 @@ const deletePost = (request, response, next) => {
     }
 };
 
-module.exports = {searchAllPost, searchPost, createPost, editPost, deletePost};
+module.exports = {
+    searchAllPost,
+    searchPost,
+    createPost,
+    editPost,
+    deletePost,
+};

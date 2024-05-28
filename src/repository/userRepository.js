@@ -19,7 +19,13 @@ const parseJson = () => {
     if (!fs.existsSync(`${process.env.JSON_PATH}/${process.env.USER_JSON_NAME}`)) {
         saveJson({
             sequence: 1,
-            users: [{id: 0, imageUrl: 'user-images/noah.png', email: 'noah', password: 'password', nickname: 'noah'}],
+            users: [{
+                id: 0,
+                imageUrl: 'user-images/noah.png',
+                email: 'noah',
+                password: 'password',
+                nickname: 'noah',
+            }],
         });
     }
 
@@ -33,7 +39,7 @@ const checkDuplicateEmail = (email) => {
 };
 
 const checkDuplicateNickname = (nickname) => {
-    if (parseJson().users.some((user) => user.email === nickname)) {
+    if (parseJson().users.some((user) => user.nickname === nickname)) {
         throw new DuplicateNicknameError();
     }
 };
@@ -86,7 +92,11 @@ const saveUser = (image, email, password, nickname) => {
     const imageUrl = saveImageAndGetImageUrl(image);
 
     json.users.push({
-        'id': json.sequence++, 'imageUrl': imageUrl, 'email': email, 'password': password, 'nickname': nickname,
+        'id': json.sequence++,
+        'imageUrl': imageUrl,
+        'email': email,
+        'password': password,
+        'nickname': nickname,
     });
 
     saveJson(json);
@@ -126,5 +136,9 @@ const updateUserPasswordById = (id, password) => {
 };
 
 module.exports = {
-    findUserByEmailAndPassword, findUserById, saveUser, updateUserImageAndNicknameById, updateUserPasswordById,
+    findUserByEmailAndPassword,
+    findUserById,
+    saveUser,
+    updateUserImageAndNicknameById,
+    updateUserPasswordById,
 };
