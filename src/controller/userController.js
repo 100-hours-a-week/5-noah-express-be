@@ -1,7 +1,10 @@
 const userService = require('../service/userService');
 
 const signIn = (request, response, next) => {
-    const {email, password} = request.body;
+    const {
+        email,
+        password,
+    } = request.body;
 
     try {
         request.session.userId = userService.signIn(email, password);
@@ -16,7 +19,11 @@ const signIn = (request, response, next) => {
 
 const signUp = (request, response, next) => {
     const image = request.file;
-    const {email, password, nickname} = request.body;
+    const {
+        email,
+        password,
+        nickname,
+    } = request.body;
 
     try {
         userService.signUp(image, email, password, nickname);
@@ -27,21 +34,25 @@ const signUp = (request, response, next) => {
     }
 };
 
-const searchUserImage = (request, response, next) => {
+const searchUserImageAndNickName = (request, response, next) => {
     const id = request.session.userId;
 
     try {
-        response.json(userService.searchUserImage(id));
+        if (id) {
+            response.json(userService.searchUserImageAndNickname(id));
+        } else {
+            response.sendStatus(401);
+        }
     } catch (error) {
         next(error);
     }
 };
 
-const searchUserInfoWithImageAndNickname = (request, response, next) => {
+const searchUserImageAndEmailAndNickname = (request, response, next) => {
     const id = request.session.userId;
 
     try {
-        response.json(userService.searchUserInfoWithImageAndNickname(id));
+        response.json(userService.searchUserImageAndEmailAndNickname(id));
     } catch (error) {
         next(error);
     }
@@ -75,5 +86,10 @@ const updateUserPassword = (request, response, next) => {
 };
 
 module.exports = {
-    signIn, signUp, searchUserImage, searchUserInfoWithImageAndNickname, updateUserImageAndNickname, updateUserPassword,
+    signIn,
+    signUp,
+    searchUserImageAndNickName,
+    searchUserImageAndEmailAndNickname,
+    updateUserImageAndNickname,
+    updateUserPassword,
 };

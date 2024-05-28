@@ -15,16 +15,7 @@ const upload = multer({storage});
 
 const router = express.Router();
 
-router.get('/image', validateUser, userController.searchUserImage, (error, request, response, next) => {
-    response.status(error.status).json({message: error.message});
-});
-
-router.get('/update/image-and-nickname', validateUser, userController.searchUserInfoWithImageAndNickname, (error, request, response, next) => {
-    // TODO 임시 구현임, 개발 필요
-    console.log(error.message);
-
-    response.status(error.status).json({message: error.message});
-});
+router.get('/update/image-and-nickname', validateUser, userController.searchUserImageAndEmailAndNickname);
 
 router.post('/update/image-and-nickname', validateUser, upload.single('image'), userController.updateUserImageAndNickname);
 

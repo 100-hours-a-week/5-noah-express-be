@@ -1,5 +1,15 @@
 const commentService = require('../service/commentService');
 
+const searchComment = (request, response, next) => {
+    const postId = request.params.postId;
+
+    try {
+        response.json(commentService.searchComment(postId));
+    } catch (error) {
+        next(error);
+    }
+};
+
 const createComment = (request, response, next) => {
     const userId = request.session.userId;
     const postId = request.params.postId;
@@ -16,7 +26,7 @@ const createComment = (request, response, next) => {
 
 const deleteComment = (request, response, next) => {
     const userId = request.session.userId;
-    const id = request.body.id;
+    const id = request.params.id;
 
     try {
         commentService.deleteComment(userId, id);
@@ -27,4 +37,8 @@ const deleteComment = (request, response, next) => {
     }
 };
 
-module.exports = {createComment, deleteComment};
+module.exports = {
+    searchComment,
+    createComment,
+    deleteComment,
+};

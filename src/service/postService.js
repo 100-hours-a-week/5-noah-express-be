@@ -30,28 +30,14 @@ const searchAllPost = () => {
 };
 
 const searchPost = (id) => {
+    // INFO: validate가 없기 때문에 중구난방 parseInt
     id = parseInt(id);
 
     const foundPost = postRepository.findPostById(id);
-    const foundComments = commentRepository.findAllCommentByPostId(id);
 
     const foundPostUser = userRepository.findUserById(foundPost.userId);
 
-    let count = 0;
-    const commentsDto = [];
-
-    foundComments.forEach(comment => {
-        const foundCommentUser = userRepository.findUserById(comment.userId);
-
-        count++;
-        commentsDto.push({
-            'id': comment.id,
-            'author': {
-                'name': foundCommentUser.nickname,
-                'imageUrl': foundCommentUser.imageUrl,
-            }, 'createdDate': comment.createdDate, 'content': comment.content,
-        });
-    });
+    const count = commentRepository.findCommentCountByPostId(id);
 
     return {
         'id': foundPost.id,
@@ -64,7 +50,7 @@ const searchPost = (id) => {
         'title': foundPost.title,
         'content': foundPost.content,
         'views': foundPost.views,
-        'comments': {'count': count, 'comments': commentsDto},
+        'comments': count,
     };
 };
 
@@ -81,4 +67,10 @@ const deletePost = (userId, id) => {
     postRepository.deletePostById(userId, parseInt(id));
 };
 
-module.exports = {searchAllPost, searchPost, createPost, editPost, deletePost};
+module.exports = {
+    searchAllPost,
+    searchPost,
+    createPost,
+    editPost,
+    deletePost,
+};

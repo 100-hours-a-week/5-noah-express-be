@@ -6,8 +6,10 @@ const commentController = require('../controller/commentController');
 
 const router = express.Router({mergeParams: true});
 
+router.get('/', commentController.searchComment);
+
 router.post('/', validateUser, commentController.createComment);
 
-router.delete('/', validateUser, commentController.deleteComment);
+router.delete('/:id', validateUser, commentController.deleteComment);
 
 module.exports = router;
